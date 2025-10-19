@@ -1,22 +1,5 @@
 import axios from "axios";
-
-interface SlackBlock {
-  type: "section";
-  text?: {
-    type: "mrkdwn";
-    text: string;
-  };
-  fields?: {
-    type: "mrkdwn";
-    text: string;
-  }[];
-}
-
-interface SlackMessage {
-  text?: string;
-  blocks?: SlackBlock[];
-  channel?: string;
-}
+import { SlackMessage } from "./slack.types";
 
 export class SlackService {
   private webhookUrl: string;
@@ -29,33 +12,17 @@ export class SlackService {
 
   async sendMessage(message: SlackMessage) {
     if (!this.webhookUrl) {
-      console.warn("⚠️ Slack webhook URL not configured.");
-      return;
+      throw new Error("Failed to send Slack alert: Webhook URL not configured");
     }
 
     try {
       await axios.post(this.webhookUrl, {
         blocks: message.blocks,
         channel: message.channel || this.defaultChannel,
-        text: message.text || "New Sentry Alert", // fallback text para notificações
+        text: message.text || "New Sentry Alert",
       });
-      console.log(
-        `✅ Slack alert enviado para ${message.channel || this.defaultChannel}`
-      );
     } catch (error) {
-      console.error("❌ Erro ao enviar alerta para o Slack:", error);
+      throw new Error("Failed to send Slack alert: " + error);
     }
   }
 }
-
-// Singleton pattern para garantir que a instância só é criada após carregar as env vars
-// let instance: SlackService | null = null;
-
-// export const slackService = {
-//   getInstance: () => {
-//     if (!instance) {
-//       instance = new SlackService();
-//     }
-//     return instance;
-//   },
-// };

@@ -1,6 +1,5 @@
 version: "3.9"
 
-# Variáveis reutilizáveis
 x-common: &common
   env_file: .env
   restart: unless-stopped
@@ -19,7 +18,6 @@ x-common: &common
         memory: 256M
 
 services:
-  # Serviço de produção usando o Dockerfile
   prod:
     <<: *common
     build:
@@ -31,7 +29,6 @@ services:
     profiles:
       - prod
 
-  # Serviço de desenvolvimento usando Node diretamente
   dev:
     <<: *common
     image: node:20-alpine

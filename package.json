@@ -1,6 +1,6 @@
 {
   "name": "alert-bridge",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Alert Bridge - forward Sentry alerts to Slack, Discord and Telegram",
   "main": "dist/index.js",
   "scripts": {

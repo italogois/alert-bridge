@@ -1,5 +1,7 @@
 # Alert Bridge
 
+> ⚠️ **Note**: This project is currently under active development and in beta. Features might change, and some integrations (Discord, Telegram) are not yet implemented.
+
 Forward Sentry alerts to Slack, Discord and Telegram.
 
 ## Menu
