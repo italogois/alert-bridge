@@ -1,9 +1,56 @@
-version: '3.9'
+version: "3.9"
+
+# Variáveis reutilizáveis
+x-common: &common
+  env_file: .env
+  restart: unless-stopped
+  networks:
+    - alert-bridge
+  healthcheck:
+    test: ["CMD", "wget", "--spider", "http://localhost:3000/health"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+  deploy:
+    resources:
+      limits:
+        memory: 512M
+      reservations:
+        memory: 256M
+
 services:
-  alertbridge:
-    build: .
-    container_name: alertbridge
+  # Serviço de produção usando o Dockerfile
+  prod:
+    <<: *common
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: alertbridge-prod
     ports:
-      - "3000:3000"
-    env_file:
-      - .env
+      - "${PORT:-3000}:3000"
+    profiles:
+      - prod
+
+  # Serviço de desenvolvimento usando Node diretamente
+  dev:
+    <<: *common
+    image: node:20-alpine
+    container_name: alertbridge-dev
+    working_dir: /app
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: sh -c "npm install && npm run dev"
+    profiles:
+      - dev
+
+volumes:
+  node_modules:
+
+networks:
+  alert-bridge:
+    driver: bridge

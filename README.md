@@ -7,6 +7,8 @@ Forward Sentry alerts to Slack, Discord and Telegram.
 - [Alert Bridge](#alert-bridge)
   - [Menu](#menu)
   - [Quickstart](#quickstart)
+    - [Option 1: Running with Docker](#option-1-running-with-docker)
+    - [Option 2: Running Locally](#option-2-running-locally)
   - [Webhook endpoint](#webhook-endpoint)
   - [Sentry Configuration](#sentry-configuration)
   - [Channels to receive messages](#channels-to-receive-messages)
@@ -14,14 +16,42 @@ Forward Sentry alerts to Slack, Discord and Telegram.
 
 ## Quickstart
 
-1. Copy `.env.example` to `.env` and fill your webhook/token values.
-2. Install dependencies: `npm install`
-3. Run in development: `npm run dev`
-4. Build and run: `npm run build && npm start` or use Docker compose:
+First, copy your environment file:
 
 ```bash
 cp .env.example .env
-docker compose up --build
+# Then fill your webhook/token values in .env
+```
+
+### Option 1: Running with Docker
+
+Just run the development environment with Docker Compose:
+
+```bash
+# Run in development mode with hot-reload
+docker compose --profile dev up
+
+# Or for production
+docker compose --profile prod up --build
+```
+
+### Option 2: Running Locally
+
+Requirements:
+
+- Node.js LTS (v20 or newer)
+
+Then run:
+
+```bash
+# Install dependencies
+npm install
+
+# Run in development mode
+npm run dev
+
+# Or build and run for production
+npm run build && npm start
 ```
 
 ## Webhook endpoint
