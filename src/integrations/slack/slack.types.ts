@@ -1,11 +1,11 @@
 interface SlackBlock {
-  type: "section";
+  type: 'section';
   text?: {
-    type: "mrkdwn";
+    type: 'mrkdwn';
     text: string;
   };
   fields?: {
-    type: "mrkdwn";
+    type: 'mrkdwn';
     text: string;
   }[];
 }

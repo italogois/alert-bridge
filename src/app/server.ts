@@ -1,8 +1,8 @@
-import Fastify from "fastify";
-import type { FastifyBaseLogger } from "fastify";
-import { registerRoutes } from "./routes";
-import { setupLogger } from "../infra/logger";
-import { loadEnv } from "../infra/env";
+import Fastify from 'fastify';
+import type { FastifyBaseLogger } from 'fastify';
+import { registerRoutes } from './routes';
+import { setupLogger } from '../infra/logger';
+import { loadEnv } from '../infra/env';
 
 export async function createServer() {
   loadEnv();

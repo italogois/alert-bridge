@@ -1,11 +1,11 @@
-import { createServer } from "./app/server";
-import { loadEnv } from "./infra/env";
+import { createServer } from './app/server';
+import { loadEnv } from './infra/env';
 
 async function main() {
   loadEnv(); // Carrega variáveis do .env
   const server = await createServer();
   const port = Number(process.env.PORT || 3000);
-  server.listen({ port, host: "0.0.0.0" }, (err, address) => {
+  server.listen({ port, host: '0.0.0.0' }, (err, address) => {
     if (err) {
       server.log.error(err);
       process.exit(1);

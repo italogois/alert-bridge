@@ -1,8 +1,6 @@
-import { normalizePayload, formatMessage } from "../shared";
-import { SlackService } from "../slack/slack.service";
-import { sendDiscordMessage } from "../discord/discord.service";
-import { sendTelegramMessage } from "../telegram/telegram.service";
-import { SentryWebhookPayload } from "./sentry.types";
+import { formatMessage } from '../shared';
+import { SlackService } from '../slack/slack.service';
+import { SentryWebhookPayload } from './sentry.types';
 
 export async function handleSentryAlert(payload: SentryWebhookPayload) {
   const message = formatMessage(payload);
